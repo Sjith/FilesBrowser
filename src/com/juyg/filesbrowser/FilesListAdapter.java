@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juyg.filesbrowser.model.FileData;
@@ -61,6 +62,7 @@ public class FilesListAdapter extends BaseAdapter{
             // Creates a ViewHolder and store references to the two children views
             // we want to bind data to.
             holder = new ViewHolder();
+            holder.fileIcon = (ImageView) convertView.findViewById(R.id.fileIcon);
             holder.fileName = (TextView) convertView.findViewById(R.id.fileName);
             holder.fileSize = (TextView) convertView.findViewById(R.id.fileSize);
             holder.fileDate = (TextView) convertView.findViewById(R.id.fileDate);
@@ -81,10 +83,12 @@ public class FilesListAdapter extends BaseAdapter{
         
         switch(fileData.getType()){
         case Directory:
-        	holder.fileName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.folder, 0, 0, 0);
+        	//holder.fileName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.folder, 0, 0, 0);
+        	holder.fileIcon.setImageResource(R.drawable.folder);
         	break;
         case Image:
-        	holder.fileName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_launcher, 0, 0, 0);
+        	//holder.fileName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_launcher, 0, 0, 0);
+        	holder.fileIcon.setImageResource(R.drawable.ic_launcher);
         	break;
         }
         
@@ -93,6 +97,7 @@ public class FilesListAdapter extends BaseAdapter{
 
 	
 	 static class ViewHolder {
+		 ImageView fileIcon;
          TextView fileName;
          TextView fileSize;
          TextView fileDate;
