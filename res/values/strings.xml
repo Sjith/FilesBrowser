@@ -2,6 +2,18 @@
 <resources>
 
     <string name="app_name">FilesBrowser</string>
-    <string name="action_settings">Settings</string>
+    <string-array name="Options">
+        <item >Delete</item>
+        <item >Move</item>
+        <item >Copy</item>
+        <item >Rename</item>
+        <item >Details</item>
+    </string-array>
+    <string name="detailsDialogTitle">Details</string>
+    <string name="detailsDialogOkButton">OK</string>
+    <string name="detailsDialogFileName">Name</string>
+    <string name="detailsDialogFileDate">Last modification</string>
+    <string name="detailsDialogFileSize">Size</string>
+    <string name="detailsDialogFileContent">Contents</string>
 
 </resources>

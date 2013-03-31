@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FilesBrowser</string>
+    <string-array name="Options">
+        <item >Eliminar</item>
+        <item >Mover</item>
+        <item >Copiar</item>
+        <item >Renombrar</item>
+        <item >Detalles</item>
+    </string-array>
+    <string name="detailsDialogTitle">Detalles</string>
+    <string name="detailsDialogOkButton">Aceptar</string>
+    <string name="detailsDialogFileName">Nombre</string>
+    <string name="detailsDialogFileDate">Última modificación</string>
+    <string name="detailsDialogFileSize">Tamaño</string>
+    <string name="detailsDialogFileContent">Contenido</string>
+
+</resources>
