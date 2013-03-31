@@ -12,6 +12,7 @@
     <string name="detailsDialogTitle">Detalles</string>
     <string name="detailsDialogOkButton">Aceptar</string>
     <string name="detailsDialogFileName">Nombre</string>
+    <string name="detailsDialogFilePath">Ruta</string>
     <string name="detailsDialogFileDate">Última modificación</string>
     <string name="detailsDialogFileSize">Tamaño</string>
     <string name="detailsDialogFileContent">Contenido</string>

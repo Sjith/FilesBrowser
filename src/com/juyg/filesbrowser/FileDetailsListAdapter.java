@@ -58,16 +58,20 @@ public class FileDetailsListAdapter extends BaseAdapter {
 			holder.content.setText(mData[0]);
 			break;
 		case 1:
-			holder.title.setText(R.string.detailsDialogFileDate);
+			holder.title.setText(R.string.detailsDialogFilePath);
 			holder.content.setText(mData[1]);
 			break;
 		case 2:
-			holder.title.setText(R.string.detailsDialogFileSize);
+			holder.title.setText(R.string.detailsDialogFileDate);
 			holder.content.setText(mData[2]);
 			break;
 		case 3:
-			holder.title.setText(R.string.detailsDialogFileContent);
+			holder.title.setText(R.string.detailsDialogFileSize);
 			holder.content.setText(mData[3]);
+			break;
+		case 4:
+			holder.title.setText(R.string.detailsDialogFileContent);
+			holder.content.setText(mData[4]);
 			break;
 		}
 		

@@ -2,16 +2,18 @@ package com.juyg.filesbrowser.model;
 
 public class FileData implements Comparable<FileData> {
 	private String name;
-	private String size;
-	private String date;
+	private String filePath;
+	private long size;
+	private long date;
 	private FileType type;
 	
 	public FileData(){
 		
 	}
 	
-	public FileData(String name,String size, String date,FileType type){
+	public FileData(String name,String filePath,long size, long date,FileType type){
 		this.name = name;
+		this.filePath = filePath;
 		this.size = size;
 		this.date = date;
 		this.type = type;
@@ -25,19 +27,27 @@ public class FileData implements Comparable<FileData> {
 		this.name = name;
 	}
 	
-	public String getSize(){
+	public String getFilePath(){
+		return filePath;
+	}
+	
+	public void setFilePath(String filePath){
+		this.filePath = filePath;
+	}
+	
+	public long getSize(){
 		return size;
 	}
 	
-	public void setSize(String size){
+	public void setSize(long size){
 		this.size = size;
 	}
 	
-	public String getDate(){
+	public long getDate(){
 		return date;
 	}
 	
-	public void setDate(String date){
+	public void setDate(long date){
 		this.date = date;
 	}
 	

@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.juyg.filesbrowser.model.FileData;
+import com.juyg.filesbrowser.utils.Utils;
 
 public class FilesListAdapter extends BaseAdapter{
 	private List<FileData> mData;
@@ -75,8 +76,8 @@ public class FilesListAdapter extends BaseAdapter{
         
         // Bind the data efficiently with the holder.
         holder.fileName.setText(fileData.getName());
-        holder.fileSize.setText(fileData.getSize());
-        holder.fileDate.setText(fileData.getDate());
+        holder.fileSize.setText(Utils.formatFileSize(fileData.getSize(),false));
+        holder.fileDate.setText(Utils.formatDate(fileData.getDate(),false));
         
         switch(fileData.getType()){
         case Directory:

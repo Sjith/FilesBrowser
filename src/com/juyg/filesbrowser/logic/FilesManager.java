@@ -10,7 +10,6 @@ import android.webkit.MimeTypeMap;
 
 import com.juyg.filesbrowser.model.FileData;
 import com.juyg.filesbrowser.model.FileType;
-import com.juyg.filesbrowser.utils.Utils;
 
 public class FilesManager {
 
@@ -19,18 +18,19 @@ public class FilesManager {
 
 		File dir = new File(path);
 
-		for (String dirFile : dir.list()) {
-			File file = new File(dir, dirFile);
-
+		File[] files = dir.listFiles();
+		
+		for (File file : files) {
+			
 			if (!file.isHidden()) {
-				String size = Utils.formatFileSize(fileSize(file), false);
-				String date = Utils.formatDate(file.lastModified(), false);
+				long size = fileSize(file);
+				long date = file.lastModified();
 
 				if (file.isDirectory()) {
-					dirFiles.add(new FileData(file.getName(), size, date,
+					dirFiles.add(new FileData(file.getName(),file.getAbsolutePath(), size, date,
 							FileType.Directory));
 				} else {
-					dirFiles.add(new FileData(file.getName(), size, date,
+					dirFiles.add(new FileData(file.getName(),file.getAbsolutePath(), size, date,
 							FileType.Image));
 				}
 			}
@@ -44,7 +44,7 @@ public class FilesManager {
 		long size = 0;
 
 		if (!file.isHidden()) {
-			if (file.isDirectory()) {
+			if (file.isDirectory() && file.list().length != 0) {
 				String[] dirFilesNames = file.list();
 
 				for (String dirFilesName : dirFilesNames) {

@@ -2,6 +2,7 @@ package com.juyg.filesbrowser;
 
 import static com.juyg.filesbrowser.constants.FileDetailsKeys.LAST_MODIFICATION_KEY;
 import static com.juyg.filesbrowser.constants.FileDetailsKeys.NAME_KEY;
+import static com.juyg.filesbrowser.constants.FileDetailsKeys.FILE_PATH_KEY;
 import static com.juyg.filesbrowser.constants.FileDetailsKeys.SIZE_KEY;
 
 import java.io.File;
@@ -39,23 +40,30 @@ public class FilesActivity extends FragmentActivity implements
 	private static final int DETAILS_OPTION = 4;
 
 	private String mRootDirectory;
-	private String mSelectedFile;
+	private int mSelectedFileIndex;
 	private List<FileData> mDirFiles;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_files);
 
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
-			mRootDirectory = Environment.getExternalStorageDirectory()
-					.getAbsolutePath();
+		if (savedInstanceState == null) {
+			if (Environment.getExternalStorageState().equals(
+					Environment.MEDIA_MOUNTED)) {
+				mRootDirectory = Environment.getExternalStorageDirectory()
+						.getAbsolutePath();
+			} else {
+				mRootDirectory = "/";
+			}
+			mDirFiles = FilesManager.listFiles(mRootDirectory);
+
 		} else {
-			mRootDirectory = "/";
+			mRootDirectory = savedInstanceState.getString("RootDirectory");
+			mDirFiles = (List<FileData>) getLastCustomNonConfigurationInstance();
 		}
-		mDirFiles = FilesManager.listFiles(mRootDirectory);
 
 		ListView list = (ListView) findViewById(R.id.filesList);
 		ListAdapter adapter = new FilesListAdapter(this, mDirFiles);
@@ -65,6 +73,17 @@ public class FilesActivity extends FragmentActivity implements
 
 		refreshList();
 
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putString("RootDirectory", mRootDirectory);
+	}
+
+	@Override
+	public Object onRetainCustomNonConfigurationInstance() {
+		return mDirFiles;
 	}
 
 	@Override
@@ -112,8 +131,7 @@ public class FilesActivity extends FragmentActivity implements
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
-		mSelectedFile = mRootDirectory + "/"
-				+ mDirFiles.get(position).getName();
+		mSelectedFileIndex = position;
 		FileOptionsDialog dialog = new FileOptionsDialog();
 		dialog.show(getSupportFragmentManager(), "OptionsDialog");
 
@@ -122,7 +140,7 @@ public class FilesActivity extends FragmentActivity implements
 
 	@Override
 	public void dialogMenuPressed(int index) {
-		File file = new File(mSelectedFile);
+		FileData file = mDirFiles.get(mSelectedFileIndex);
 
 		switch (index) {
 		case DELETE_OPTION:
@@ -135,18 +153,20 @@ public class FilesActivity extends FragmentActivity implements
 			Log.e("as", "EL INDICE 2");
 			break;
 		case RENAME_OPTION:
-			
+
 			break;
 		case DETAILS_OPTION:
 			FileDetailsDialog dialog = new FileDetailsDialog();
 			Bundle args = new Bundle();
 			args.putString(NAME_KEY, file.getName());
-			args.putString(LAST_MODIFICATION_KEY, Utils.formatDate(file.lastModified(),true));
-			args.putString(SIZE_KEY, Utils.formatFileSize(file.length(),true));
+			args.putString(FILE_PATH_KEY,file.getFilePath());
+			args.putString(LAST_MODIFICATION_KEY,
+					Utils.formatDate(file.getDate(), true));
+			args.putString(SIZE_KEY, Utils.formatFileSize(file.getSize(), true));
 			dialog.setArguments(args);
 			dialog.show(getSupportFragmentManager(), "DetailsDialog");
 			break;
 		}
 	}
-	
+
 }
